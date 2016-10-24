@@ -6,15 +6,11 @@ export function fiberize(fn) {
   return function (done) {
     const self = this;
     Fiber(function () {
-      try {
-        if (fn.length === 1) {
-          fn.call(self, done);
-        } else {
-          fn.call(self);
-          done();
-        }
-      } catch (error) {
-        done(error);
+      if (fn.length === 1) {
+        fn.call(self, done);
+      } else {
+        fn.call(self);
+        done();
       }
     }).run();
   };
